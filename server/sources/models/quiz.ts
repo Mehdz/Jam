@@ -3,7 +3,7 @@ import { Schema, model, Document, Model } from 'mongoose';
 interface IQuiz extends Document {
     question: string;
     answer: string;
-    level: number;
+    difficulty: number;
     type: number;
 }
 
@@ -17,7 +17,7 @@ const quizSchema = new Schema<IQuiz>({
     type: String,
     required: true,
   },
-  level : {
+  difficulty : {
     type: Number,
     required: true,
   },
