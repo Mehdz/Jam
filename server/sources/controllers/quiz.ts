@@ -4,6 +4,7 @@ import {IQuiz, QuizModel} from '../models/quiz';
 export const getAllQuiz = async (req: Request, res: Response) => {
   try {
     const quiz: Array<IQuiz> = await QuizModel.find({});
+
     res.status(200).json({
       status: 'success',
       data: quiz
@@ -13,11 +14,12 @@ export const getAllQuiz = async (req: Request, res: Response) => {
   }
 };
 
-export const getQuizByLevel = async (req: Request, res: Response) => {
-  const {level} = req.params;
+export const getQuizByDifficulty = async (req: Request, res: Response) => {
+  const {difficulty} = req.params;
 
   try {
-    const quiz: Array<IQuiz> = await QuizModel.find({level: level});
+    const quiz: Array<IQuiz> = await QuizModel.find({difficulty: difficulty});
+
     res.status(200).json({
       status: 'success',
       data: quiz
