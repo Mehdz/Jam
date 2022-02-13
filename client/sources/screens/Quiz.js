@@ -1,43 +1,55 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { TextInput, Title } from 'react-native-paper';
-import LargeButton from '../components/LargeButton';
 import PropTypes from 'prop-types';
 import LogoContainer from '../components/LogoContainer';
+import QuizMultipleChoice from 'volkeno-react-native-quiz-multiple-choice';
+import {useSelector, useDispatch} from 'react-redux';
+import { getQuizByDifficulty } from '../reducers/Actions/Quiz';
 
 const QuizForm = ({navigation}) => {
-  const [email, setEmail] = React.useState('');
+  const {quiz} = useSelector(state => state.quizReducer);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const refreshOnFocus = navigation.addListener('focus', () => {
+      dispatch(getQuizByDifficulty(1));
+    });
+
+    return refreshOnFocus;
+  }, [dispatch]);
+
+  const data = (quiz && quiz[0] && quiz[0].question && quiz);
 
   return (
-    <View style={styles.formContainer}>
-      <Title style={styles.title}>
-        QUESTION
-      </Title>
-      <Title style={styles.question}>
-        Question de loco ici
-      </Title>
-      <TextInput
-        placeholder="Your answer"
-        value={email}
-        mode="outlined"
-        keyboardType='numeric'
-        onChangeText={text => setEmail(text)}
-        style={{marginBottom: 20}}
-      />
-      <LargeButton onPress={() => console.log(true)} mode="contained">
-        Submit your answer
-      </LargeButton>
-      <LargeButton dark={true} color={'#656370'} onPress={() => navigation.navigate('Home')} mode="contained">
-        Back to Home
-      </LargeButton>
-    </View>
+    <QuizMultipleChoice
+      containerStyle={{ backgroundColor: '#f6f6f6', }}
+      questionTitleStyle={{ fontSize: 25, color: 'black' }}
+      responseStyle={{ borderRadius: 10 }}
+      responseTextStyle={{ fontSize: 20, fontWeight: 'normal' }}
+      selectedResponseStyle={{borderRadius: 10, backgroundColor: '#3498db'}}
+      selectedResponseTextStyle={{fontSize: 20, fontWeight: 'normal'}}
+      responseRequired={true}
+      nextButtonText={'Next'}
+      nextButtonStyle={{ backgroundColor: '#06d755' }}
+      prevButtonText={'Prev'}
+      prevButtonStyle={{ backgroundColor: '#fa5541' }}
+      endButtonText={'Done'}
+      endButtonStyle={{ backgroundColor: '#000' }}
+      buttonsContainerStyle={{ marginTop: 30 }}
+      onEnd={(results) => {
+        console.log(results);
+      }}
+      data={data}
+    />
   );
 };
 
 const Quiz = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <LogoContainer />
+      <View style={{padding: 30, flex: 0.2}}>
+        <LogoContainer />
+      </View>
       <QuizForm navigation={navigation} />
     </View>
   );
@@ -46,15 +58,7 @@ const Quiz = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 30,
-  },
-  formContainer: {
-    flex: 1,
-  },
-  title : {
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 30,
+    padding: 10
   },
   question : {
     textAlign: 'center',

@@ -9,10 +9,10 @@ export const getAllQuiz = () => async dispatch => {
 
     dispatch({
       type: GET_ALL_QUIZ,
-      payload: response.data
+      payload: response.data.quiz
     });
 
-    return response.data;
+    return response.data.quiz;
   } catch (err) {
     console.error(err.response);
   }
@@ -20,13 +20,11 @@ export const getAllQuiz = () => async dispatch => {
 
 export const getQuizByDifficulty = (difficulty) => async dispatch => {
   try {
-    const response = await axios.get('http://127.0.0.1:8080/api/quiz/difficulty/', {
-      difficulty: difficulty,
-    });
+    const response = await axios.get(`http://127.0.0.1:8080/api/quiz/${difficulty}`);
 
     dispatch({
       type: GET_ALL_QUIZ,
-      payload: response.data
+      payload: response.data.quiz
     });
 
     return response.data;

@@ -7,7 +7,7 @@ export const getAllQuiz = async (req: Request, res: Response) => {
 
     res.status(200).json({
       status: 'success',
-      data: quiz
+      quiz
     });
   } catch (error) {
     res.status(500).json(error);
@@ -22,10 +22,30 @@ export const getQuizByDifficulty = async (req: Request, res: Response) => {
 
     res.status(200).json({
       status: 'success',
-      data: quiz
+      quiz
     });
   } catch (error) {
     res.status(500).json(error);
   }
 };
 
+export const addQuiz = async (req: Request, res: Response) => {
+  const {question, answers, responses, difficulty, questionNb} = req.body;
+
+  try {
+    const quiz = await QuizModel.create({
+      question: question,
+      answers: answers,
+      responses: responses,
+      difficulty: difficulty,
+      questionNb: questionNb,
+    });
+
+    res.status(200).json({
+      status: 'success',
+      quiz
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
