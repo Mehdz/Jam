@@ -33,7 +33,7 @@ const Home = ({navigation}) => {
         </Paragraph>
       </View>
       <View style={styles.containerBtn}>
-        <LargeButton onPress={() => navigation.push('End')} mode="contained">
+        <LargeButton onPress={() => navigation.push('Quiz')} mode="contained">
           Easy
         </LargeButton>
         <LargeButton onPress={() => navigation.push('Quiz')} mode="contained" disabled={mediumBtn}>
