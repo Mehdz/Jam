@@ -3,8 +3,11 @@ import { View, StyleSheet, Image, Text } from 'react-native';
 import { Headline, Paragraph, Title } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import LargeButton from '../components/LargeButton';
+import { useSelector } from 'react-redux';
 
 const End = ({navigation}) => {
+  const {user} = useSelector();
+
   return (
     <View style={styles.container}>
       <View style={styles.containerLogo}>
@@ -19,6 +22,7 @@ const End = ({navigation}) => {
           Like us, you took the hard way, and decided to success in Epitech.
         </Paragraph>
         <Title style={styles.title}>This is our greatest SUCCESS</Title>
+        <Title style={styles.title}>SCORE : {user && user.score}</Title>
       </View>
       <View style={styles.containerBtn}>
         <LargeButton onPress={() => navigation.navigate('Home')} mode="contained">
