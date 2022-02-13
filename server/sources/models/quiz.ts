@@ -4,7 +4,7 @@ interface IQuiz extends Document {
     question: string;
     answer: string;
     difficulty: number;
-    type: number;
+    questionNb: number;
 }
 
 const quizSchema = new Schema<IQuiz>({
@@ -21,7 +21,7 @@ const quizSchema = new Schema<IQuiz>({
     type: Number,
     required: true,
   },
-  type : {
+  questionNb : {
     type: Number,
     required: true,
   },
