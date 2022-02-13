@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Image, Text } from 'react-native';
 import { Headline, Paragraph } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import LargeButton from '../components/LargeButton';
+import {useDispatch, useSelector} from 'react-redux';
+import { setUserData } from '../reducers/Actions/User';
 
 const Home = ({navigation}) => {
+  const {user} = useSelector(state => state.userReducer);
+  const [mediumBtn, setMediumBtn] = useState(true);
+  const [hardBtn, setHardBtn] = useState(true);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setUserData());
+    if (user && user.difficulty === 'hard') {
+      setMediumBtn(false);
+      setHardBtn(false);
+    } else if (user && user.difficulty === 'medium')
+      setMediumBtn(false);
+  }, [setMediumBtn, setHardBtn]);
+
   return (
     <View style={styles.container}>
       <View style={styles.containerLogo}>
@@ -20,10 +36,10 @@ const Home = ({navigation}) => {
         <LargeButton onPress={() => navigation.push('End')} mode="contained">
           Easy
         </LargeButton>
-        <LargeButton onPress={() => navigation.push('Quiz')} mode="contained">
+        <LargeButton onPress={() => navigation.push('Quiz')} mode="contained" disabled={mediumBtn}>
           Medium
         </LargeButton>
-        <LargeButton onPress={() => navigation.push('Quiz')} mode="contained">
+        <LargeButton onPress={() => navigation.push('Quiz')} mode="contained" disabled={hardBtn}>
           Hard
         </LargeButton>
       </View>

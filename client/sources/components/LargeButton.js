@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 
-function LargeButton({children, onPress, mode, icon, color, dark}) {
+function LargeButton({children, onPress, mode, icon, color, dark, disabled}) {
   return (
     <Button
       contentStyle={styles.btn}
@@ -12,6 +12,7 @@ function LargeButton({children, onPress, mode, icon, color, dark}) {
       icon={icon}
       color={color}
       dark={dark}
+      disabled={disabled}
       onPress={onPress}>
       {children}
     </Button>
@@ -31,6 +32,7 @@ LargeButton.propTypes = {
   icon : PropTypes.string,
   color: PropTypes.string,
   dark: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 export default LargeButton;
