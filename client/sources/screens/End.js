@@ -6,14 +6,14 @@ import LargeButton from '../components/LargeButton';
 import { useSelector } from 'react-redux';
 
 const End = ({navigation}) => {
-  const {user} = useSelector();
+  const {user} = useSelector(state => state.userReducer);
 
   return (
     <View style={styles.container}>
       <View style={styles.containerLogo}>
         <Image source={require('../assets/logo.png')} style={styles.logo}/>
         <Headline style={styles.headline}>
-          <Text style={styles.headline}>A Gorilla Path</Text>
+          <Text style={styles.headline}>The Hard Way</Text>
         </Headline>
         <Paragraph style={styles.paragraph}>
           Give 100% of yourself, be proud.
