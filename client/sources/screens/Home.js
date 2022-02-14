@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet, Image, Text } from 'react-native';
 import { Headline, Paragraph } from 'react-native-paper';
 import PropTypes from 'prop-types';
@@ -8,48 +8,54 @@ import { setUserData } from '../reducers/Actions/User';
 
 const Home = ({navigation}) => {
   const {user} = useSelector(state => state.userReducer);
-  const [mediumBtn, setMediumBtn] = useState(true);
-  const [hardBtn, setHardBtn] = useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setUserData());
-    if (user && user.difficulty === 'hard') {
-      setMediumBtn(false);
-      setHardBtn(false);
-    } else if (user && user.difficulty === 'medium')
-      setMediumBtn(false);
-  }, [setMediumBtn, setHardBtn]);
+    const refreshOnFocus = navigation.addListener('focus', () => {
+      dispatch(setUserData());
+    });
+
+    return refreshOnFocus;
+  }, [dispatch]);
 
   return (
     <View style={styles.container}>
       <View style={styles.containerLogo}>
         <Image source={require('../assets/logo.png')} style={styles.logo}/>
         <Headline style={styles.headline}>
-          <Text style={styles.headline}>A Gorilla Path</Text>
+          <Text style={styles.headline}>The Hard Way</Text>
         </Headline>
         <Paragraph style={styles.paragraph}>
           If my mind can conceive it, if my heart can believe it, then I can achieve it.
         </Paragraph>
       </View>
       <View style={styles.containerBtn}>
+        {user && user.difficulty === '0' &&
         <LargeButton onPress={() => navigation.push('Quiz', {
-          difficulty: 1
+          difficulty: 0
         })} mode="contained">
+          Tutorial
+        </LargeButton> ||
+        <>
+          <LargeButton onPress={() => navigation.push('Quiz', {
+            difficulty: 1
+          })} mode="contained">
           Easy
-        </LargeButton>
-        <LargeButton onPress={() => navigation.push('Quiz', {
-          difficulty: 2
-        })}
-        mode="contained" disabled={mediumBtn}>
+          </LargeButton>
+          <LargeButton onPress={() => navigation.push('Quiz', {
+            difficulty: 2
+          })}
+          mode="contained" disabled={user?.difficulty > '1' ? false : true}>
           Medium
-        </LargeButton>
-        <LargeButton onPress={() => navigation.push('Quiz', {
-          difficulty: 3
-        })}
-        mode="contained" disabled={hardBtn}>
+          </LargeButton>
+          <LargeButton onPress={() => navigation.push('Quiz', {
+            difficulty: 3
+          })}
+          mode="contained" disabled={user?.difficulty > '2' ? false : true}>
           Hard
-        </LargeButton>
+          </LargeButton>
+        </>
+        }
       </View>
     </View>
   );
