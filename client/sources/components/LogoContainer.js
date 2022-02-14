@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 
 const getLevel = (difficulty) => {
   switch (difficulty) {
+  case 0:
+    return 'TUTORIAL';
   case 1:
     return 'EASY';
   case 2:
