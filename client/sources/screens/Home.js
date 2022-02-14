@@ -33,13 +33,21 @@ const Home = ({navigation}) => {
         </Paragraph>
       </View>
       <View style={styles.containerBtn}>
-        <LargeButton onPress={() => navigation.push('Quiz')} mode="contained">
+        <LargeButton onPress={() => navigation.push('Quiz', {
+          difficulty: 1
+        })} mode="contained">
           Easy
         </LargeButton>
-        <LargeButton onPress={() => navigation.push('Quiz')} mode="contained" disabled={mediumBtn}>
+        <LargeButton onPress={() => navigation.push('Quiz', {
+          difficulty: 2
+        })}
+        mode="contained" disabled={mediumBtn}>
           Medium
         </LargeButton>
-        <LargeButton onPress={() => navigation.push('Quiz')} mode="contained" disabled={hardBtn}>
+        <LargeButton onPress={() => navigation.push('Quiz', {
+          difficulty: 3
+        })}
+        mode="contained" disabled={hardBtn}>
           Hard
         </LargeButton>
       </View>
