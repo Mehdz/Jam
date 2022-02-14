@@ -30,7 +30,7 @@ export const getQuizByDifficulty = async (req: Request, res: Response) => {
 };
 
 export const addQuiz = async (req: Request, res: Response) => {
-  const {question, answers, responses, difficulty, questionNb} = req.body;
+  const {question, answers, responses, difficulty} = req.body;
 
   try {
     const quiz = await QuizModel.create({
@@ -38,7 +38,6 @@ export const addQuiz = async (req: Request, res: Response) => {
       answers: answers,
       responses: responses,
       difficulty: difficulty,
-      questionNb: questionNb,
     });
 
     res.status(200).json({

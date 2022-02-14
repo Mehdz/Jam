@@ -5,7 +5,6 @@ interface IQuiz extends Document {
     answers: Array<string>;
     responses: Array<string>;
     difficulty: number;
-    questionNb: number;
 }
 
 const quizSchema = new Schema<IQuiz>({
@@ -23,10 +22,6 @@ const quizSchema = new Schema<IQuiz>({
     required: true,
   }],
   difficulty : {
-    type: Number,
-    required: true,
-  },
-  questionNb : {
     type: Number,
     required: true,
   },
