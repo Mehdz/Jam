@@ -26,7 +26,7 @@ const Home = ({navigation}) => {
           <Text style={styles.headline}>The Hard Way</Text>
         </Headline>
         <Paragraph style={styles.paragraph}>
-          If my mind can conceive it, if my heart can believe it, then I can achieve it.
+          Don’t wish it were easier. Wish you were better.
         </Paragraph>
       </View>
       <View style={styles.containerBtn}>
