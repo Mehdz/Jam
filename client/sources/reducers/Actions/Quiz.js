@@ -32,3 +32,15 @@ export const getQuizByDifficulty = (difficulty) => async dispatch => {
     console.error(err.response);
   }
 };
+
+export const resetQuizData = () => dispatch => {
+  try {
+    dispatch({
+      type: GET_ALL_QUIZ,
+      payload: []
+    });
+
+  } catch (err) {
+    console.error(err.response);
+  }
+};
