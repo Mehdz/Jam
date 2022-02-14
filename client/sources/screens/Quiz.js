@@ -1,18 +1,52 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import LogoContainer from '../components/LogoContainer';
 import QuizMultipleChoice from 'volkeno-react-native-quiz-multiple-choice';
 import {useSelector, useDispatch} from 'react-redux';
-import { getQuizByDifficulty } from '../reducers/Actions/Quiz';
+import { getQuizByDifficulty, resetQuizData } from '../reducers/Actions/Quiz';
 import { ActivityIndicator } from 'react-native-paper';
+import { setUserDiffculty, setUserScore } from '../reducers/Actions/User';
+
+const getMark = (results) => {
+  let mark = 0;
+
+  results.forEach(element => {
+    element?.isRight === true ? mark++ : 0;
+  });
+  return mark;
+};
+
+const QuizFormEnd = (navigation, difficulty, results) => {
+  const nbquestions = results.length;
+  const mark = getMark(results);
+  const redirection = () => difficulty < '3' ? navigation.navigate('Home') : navigation.navigate('End');
+
+  {
+    Alert.alert(
+      'Well done bro',
+      `GG, you ended the level ${difficulty} \n RESULT : ${mark}/${nbquestions}`,
+      [
+        { text: 'Back to home', onPress: () => {
+          redirection();
+        } }
+      ]
+    );
+  }
+};
 
 const QuizForm = ({navigation, difficulty}) => {
   const {quiz} = useSelector(state => state.quizReducer);
+  const {user} = useSelector(state => state.userReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getQuizByDifficulty(difficulty));
+    const refreshOnFocus = navigation.addListener('focus', () => {
+      dispatch(resetQuizData());
+      dispatch(getQuizByDifficulty(difficulty));
+    });
+
+    return refreshOnFocus;
   }, [dispatch]);
 
   return (
@@ -33,9 +67,11 @@ const QuizForm = ({navigation, difficulty}) => {
         endButtonStyle={{ backgroundColor: '#000' }}
         buttonsContainerStyle={{ marginTop: 30 }}
         onEnd={(results) => {
-          console.log(results);
+          dispatch(setUserScore((parseInt(user?.score) + getMark(results)).toString()));
+          dispatch(setUserDiffculty((parseInt(difficulty) + 1).toString()));
+          QuizFormEnd(navigation, difficulty, results);
         }}
-        data={quiz && quiz?.[0] && quiz?.[0]?.question && quiz}
+        data={quiz}
       /> || <ActivityIndicator size="large"/>}
     </>
   );
