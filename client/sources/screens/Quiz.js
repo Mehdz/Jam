@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, Alert, Platform } from 'react-native';
 import PropTypes from 'prop-types';
 import LogoContainer from '../components/LogoContainer';
 import QuizMultipleChoice from 'volkeno-react-native-quiz-multiple-choice';
@@ -25,7 +25,7 @@ const QuizFormEnd = (navigation, difficulty, results) => {
   {
     Alert.alert(
       'Well done bro',
-      `GG, you ended the level ${difficulty} \n RESULT : ${mark}/${nbquestions}`,
+      `GG, you ended the level ${difficulty}\nRESULT : ${mark}/${nbquestions}`,
       [
         { text: 'Back to home', onPress: () => {
           redirection();
@@ -65,7 +65,7 @@ const QuizForm = ({navigation, difficulty}) => {
         prevButtonStyle={{ backgroundColor: '#fa5541' }}
         endButtonText={'Done'}
         endButtonStyle={{ backgroundColor: '#000' }}
-        buttonsContainerStyle={{ marginTop: 30 }}
+        buttonsContainerStyle={{ marginTop: Platform.OS === 'ios' ? 30 : 'auto' }}
         onEnd={(results) => {
           dispatch(setUserScore((parseInt(user?.score) + getMark(results)).toString()));
           dispatch(setUserDiffculty((parseInt(difficulty) + 1).toString()));

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Image, Text } from 'react-native';
+import { View, StyleSheet, Image, Text, Platform } from 'react-native';
 import { Headline, Paragraph, Title } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import LargeButton from '../components/LargeButton';
@@ -40,10 +40,10 @@ const styles = StyleSheet.create({
   },
   containerLogo: {
     flex: 2,
-    paddingTop: 150,
+    paddingTop: Platform.OS === 'ios' ? 150 : 50
   },
   containerBtn : {
-    flex: 1,
+    flex: Platform.OS === 'ios' ? 1 : 0.5,
   },
   logo : {
     width: 130,
