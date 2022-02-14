@@ -1,6 +1,4 @@
 import {
-  SET_USER_QUESTION,
-  SET_USER_LEVEL,
   SET_USER_DIFFCULTY,
   SET_USER_SCORE,
   SET_USER_DATA,
@@ -8,30 +6,20 @@ import {
 
 const initState = {
   user : {
-    question : 0,
-    level: 0,
-    difficulty: 'easy',
+    difficulty: 0,
     score: 0,
   }
 };
 
-function quizReducer(state = initState, action) {
+function userReducer(state = initState, action) {
   switch (action.type) {
-  case SET_USER_QUESTION:
-    return {...state, user: {
-      ...state, question: action.payload
-    }};
-  case SET_USER_LEVEL:
-    return {...state, user: {
-      ...state, level: action.payload
-    }};
   case SET_USER_DIFFCULTY:
     return {...state, user: {
-      ...state, difficulty: action.payload
+      ...state.user, difficulty: action.payload
     }};
   case SET_USER_SCORE:
     return {...state, user: {
-      ...state, score: action.payload
+      ...state.user, score: action.payload
     }};
   case SET_USER_DATA:
     return {...state, user: action.payload};
@@ -40,4 +28,4 @@ function quizReducer(state = initState, action) {
   }
 }
 
-export default quizReducer;
+export default userReducer;
