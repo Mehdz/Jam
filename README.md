@@ -14,6 +14,7 @@ For this Jam, here’s the available challenges:
 • The project contains/includes a gorilla (somewhere, anywhere. Kind of an easter egg, or not)
 • The project includes a motivational quote about success.
 
-The completion of those challenges are not mandatory but will be taken into consideration during the evaluation.
+The completion of those challenges are not mandatory but will be taken into consideration 
+during the evaluation.
 
 ```
